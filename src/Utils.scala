@@ -8,6 +8,8 @@ object Utils {
 
   def abs(a: BigInt): BigInt = if (a >= 0) a else a * (-1)
 
+  def max(a: BigInt, b: BigInt) = if(a > b) a else b
+
   def factorize(n: BigInt): List[BigInt] = Sequences.naturals.tail.takeWhile(j => j * j <= n).find(n % _ == 0).
     fold(List(n))(i => i :: factorize(n/i))
 
@@ -32,18 +34,14 @@ object Utils {
 }
 
 object Sequences {
-  def naturals: Stream[BigInt] = Stream.cons(BigInt(1), naturals.map(_ + 1))
+  lazy val naturals: Stream[BigInt] = Stream.cons(BigInt(1), naturals.map(_ + 1))
 
-  def primes: Stream[BigInt] = BigInt(2) #:: Stream.from(3).map(i => BigInt(i)).filter(i =>
-    primes.takeWhile(j => j * j <= i).forall(i % _ > 0))
+  lazy val primes: Stream[BigInt] = BigInt(2) #:: Stream.from(3).filter(i =>
+    primes.takeWhile(j => j * j <= i).forall(i % _ > 0)).map(i => BigInt(i))
 
-  def sieve(s: Stream[BigInt]): Stream[BigInt] = s.head #:: sieve(s.tail filter (_ % s.head != 0))
+  //lazy val fibonacci: Stream[BigInt] = Stream.cons(BigInt(0), Stream.cons(BigInt(1), fibonacci.zip(fibonacci.tail).map(n => n._1 + n._2)))
 
-  val primes2 = sieve(naturals.tail)
-
-  //def fibonacci: Stream[BigInt] = Stream.cons(BigInt(0), Stream.cons(BigInt(1), fibonacci.zip(fibonacci.tail).map(n => n._1 + n._2)))
-
-  def fibonacci: Stream[BigInt] = BigInt(0) #:: fibonacci.scanLeft(BigInt(1))(_ + _)
+  lazy val fibonacci: Stream[BigInt] = BigInt(0) #:: fibonacci.scanLeft(BigInt(1))(_ + _)
 }
 
 case class Fraction(var numerator: BigInt, var denominator: BigInt){

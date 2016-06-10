@@ -9,6 +9,6 @@ object Main {
     //println(Sequences.primes(700) + ", ")
     //println(Sequences.primes(900) + ", ")
     //println(Sequences.fibonacci.take(600).toList)
-    println(Solutions.p8)
+    println(Solutions.p11)
   }
 }
